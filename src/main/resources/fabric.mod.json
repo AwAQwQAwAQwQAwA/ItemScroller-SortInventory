@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "id": "sortscroller",
+  "name": "Sort Scroller",
+  "version": "${version}",
+
+  "description": "Item Scroller’s sortInventory is literally the best inventory sorter in the world!",
+  "authors": [
+    "budao1337"
+  ],
+  "contact": {
+  },
+
+  "license": "LGPLv3",
+  "icon": "icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "main": [
+      "dev.budao.sortscroller.SortScroller"
+    ]
+  },
+
+  "mixins": [
+    "sortscroller.mixins.json"
+  ],
+
+  "depends": {
+    "minecraft": ">=1.20.1",
+    "itemscroller": ">=0.20.0"
+  }
+}
