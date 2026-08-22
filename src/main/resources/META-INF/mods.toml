@@ -1,0 +1,36 @@
+modLoader = "javafml"
+loaderVersion = "[43,)"
+license = "LGPLv3"
+
+[[mods]]
+modId = "sortscroller"
+version = "${version}"
+displayName = "Sort Scroller"
+displayURL="https://github.com/AwAQwQAwAQwQAwA/ItemScroller-SortInventory" #optional
+logoFile="icon.png" #optional
+credits="masa" #optional
+authors="budao1337" #optional
+description = '''
+Item Scroller’s sortInventory is literally the best inventory sorter in the world!
+'''
+
+[[dependencies.sortscroller]]
+modId = "forge"
+mandatory = true
+versionRange = "[43,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.sortscroller]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.sortscroller]]
+modId = "rocknroller"
+mandatory = true
+versionRange = "*"
+ordering = "NONE"
+side = "BOTH"

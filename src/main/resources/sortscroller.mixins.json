@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "package": "dev.budao.sortscroller.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "accessor.IHotkeysAccessor",
+    "itemscroller.config.MixinConfigs$Generic",
+    "itemscroller.config.MixinHotkeys",
+    "itemscroller.event.MixinKeybindCallbacks"
+  ]
+}
