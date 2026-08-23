@@ -1,6 +1,6 @@
 # SortScroller / ItemScroller-SortInventory
 
-[![GitHub Release](https://img.shields.io/github/v/release/AwAQwQAwAQwQAwA/ItemScroller-SortInventory)](https://github.com/AwAQwQAwAQwQAwA/ItemScroller-SortInventory/releases)
+[![GitHub Release](https://img.shields.io/github/v/tag/AwAQwQAwAQwQAwA/ItemScroller-SortInventory?tag=v1.20.1-forge-0.1.4)](https://github.com/AwAQwQAwAQwQAwA/ItemScroller-SortInventory/releases/tag/1.20.1-forge-0.1.4)
 [![GitHub Issues](https://img.shields.io/github/issues/AwAQwQAwAQwQAwA/ItemScroller-SortInventory)](https://github.com/AwAQwQAwAQwQAwA/ItemScroller-SortInventory/issues)
 
 ---
