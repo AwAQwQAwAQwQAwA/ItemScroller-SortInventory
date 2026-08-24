@@ -2,7 +2,6 @@ package dev.budao.sortscroller.utils;
 
 import dev.budao.sortscroller.config.SortConfigs;
 import fi.dy.masa.itemscroller.ItemScroller;
-import fi.dy.masa.itemscroller.config.Configs;
 import fi.dy.masa.itemscroller.util.AccessorUtils;
 import fi.dy.masa.itemscroller.util.ItemType;
 import it.unimi.dsi.fastutil.Pair;
@@ -25,6 +24,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.util.Identifier;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +36,8 @@ import java.util.stream.IntStream;
 import static fi.dy.masa.itemscroller.util.InventoryUtils.*;
 
 public class SortInventoryUtils {
+    private static final MinecraftClient MC = MinecraftClient.getInstance();
+
     private static Runnable selectedSlotUpdateTask;
     public static boolean assumeEmptyShulkerStacking = false;
     private static List<String> topSortingPriorityList = SortConfigs.SORT_TOP_PRIORITY_INVENTORY.getStrings();
@@ -46,7 +48,6 @@ public class SortInventoryUtils {
     {
         Pair<Integer, Integer> range = new IntIntMutablePair(Integer.MAX_VALUE, 0);
         Slot focusedSlot = AccessorUtils.getSlotUnderMouse(gui);
-        MinecraftClient mc = MinecraftClient.getInstance();
         boolean shulkerBoxFix;
 
         if (focusedSlot == null)
@@ -160,7 +161,7 @@ public class SortInventoryUtils {
         {
             ClientStatusC2SPacket packet = new ClientStatusC2SPacket(ClientStatusC2SPacket.Mode.REQUEST_STATS);
 
-            mc.getNetworkHandler().sendPacket(packet);
+            MC.getNetworkHandler().sendPacket(packet);
             selectedSlotUpdateTask = () -> trySort(gui, range.first(), range.second(), shulkerBoxFix, swapSlot);
         }
         else
@@ -294,8 +295,6 @@ public class SortInventoryUtils {
 
     private static int compareStacks(ItemStack stack1, ItemStack stack2)
     {
-        MinecraftClient mc = MinecraftClient.getInstance();
-
         stack1 = stack1 != null ? stack1 : ItemStack.EMPTY;
         stack2 = stack2 != null ? stack2 : ItemStack.EMPTY;
 
@@ -349,23 +348,23 @@ public class SortInventoryUtils {
                 method.equals(SortingMethod.CATEGORY_COUNT) ||
                 method.equals(SortingMethod.CATEGORY_RARITY) ||
                 method.equals(SortingMethod.CATEGORY_RAWID) &&
-                        mc.world != null)
+                        MC.world != null)
         {
             // Sort by category
             if (displayContext == null)
             {
-                displayContext = SortingCategory.INSTANCE.buildDisplayContext(mc);
+                displayContext = SortingCategory.INSTANCE.buildDisplayContext(MC);
                 // This isn't used here, but it is required to build the list of items,
                 // as if we are opening the Creative Inventory Screen.
             }
 
-            SortingCategory.Entry cat1 = SortingCategory.INSTANCE.fromItemStack(stack1);
-            SortingCategory.Entry cat2 = SortingCategory.INSTANCE.fromItemStack(stack2);
+            Identifier cat1 = SortingCategory.INSTANCE.fromItemStack(stack1);
+            Identifier cat2 = SortingCategory.INSTANCE.fromItemStack(stack2);
 
-            if (!cat1.getStringValue().equals(cat2.getStringValue()))
+            if (!cat1.equals(cat2))
             {
-                int index1 = SortingCategory.INSTANCE.getEntryIndex(cat1);
-                int index2 = SortingCategory.INSTANCE.getEntryIndex(cat2);
+                int index1 = SortingCategory.INSTANCE.fromIdentifier(cat1);
+                int index2 = SortingCategory.INSTANCE.fromIdentifier(cat2);
                 boolean stack1UnspecifiedCategoryPriority = index1 == -1;
                 boolean stack2UnspecifiedCategoryPriority = index2 == -1;
 

@@ -5,19 +5,25 @@ import java.util.Iterator;
 import javax.annotation.Nullable;
 import com.google.common.collect.ImmutableList;
 
+import fi.dy.masa.itemscroller.ItemScroller;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
-import fi.dy.masa.malilib.util.StringUtils;
-import fi.dy.masa.itemscroller.Reference;
-
 public class SortingCategory
 {
     public static final SortingCategory INSTANCE = new SortingCategory();
-    public ImmutableList<Entry> VALUES = ImmutableList.copyOf(Entry.values());
+    public ImmutableList<ItemGroup> values = ImmutableList.of();
+
+    public void buildItemGroupList() {
+        values = ItemGroups.getGroupsToDisplay()
+                .stream()
+                .filter(itemGroup -> itemGroup.getType() == ItemGroup.Type.CATEGORY)
+                .collect(ImmutableList.toImmutableList());
+    }
 
     @Nullable
     public ItemGroup.DisplayContext buildDisplayContext(MinecraftClient mc)
@@ -33,10 +39,13 @@ public class SortingCategory
                 group.getType() == ItemGroup.Type.CATEGORY).forEach((group) ->
                 group.updateEntries(ctx));
 
+        if (!(values != null && !values.isEmpty()))
+            buildItemGroupList();
+
         return ctx;
     }
 
-    public Entry fromItemStack(ItemStack stack)
+    public Identifier fromItemStack(ItemStack stack)
     {
         for (int i = 0; i < Registries.ITEM_GROUP.size(); i++)
         {
@@ -56,7 +65,7 @@ public class SortingCategory
                     {
                         if (ItemStack.areItemsEqual(iter.next(), stack))
                         {
-                            return fromItemGroup(itemGroup);
+                            return Registries.ITEM_GROUP.getId(itemGroup);
                         }
                     }
 
@@ -69,95 +78,31 @@ public class SortingCategory
                 {
                     if (ItemStack.areItemsEqual(iter.next(), stack))
                     {
-                        return fromItemGroup(itemGroup);
+                        return Registries.ITEM_GROUP.getId(itemGroup);
                     }
                 }
 
             }
         }
 
-        return Entry.OTHER;
+        return Registries.ITEM_GROUP.getId(values.get(values.size() - 1));
     }
 
     @Nullable
-    public Entry fromItemGroup(ItemGroup group)
+    public int fromItemGroup(ItemGroup group)
     {
         Identifier id = Registries.ITEM_GROUP.getId(group);
 
         if (id != null)
         {
-            Entry entry = Entry.fromString(id.getPath());
-            return entry == null ? Entry.OTHER : entry;
+            return values.indexOf(group);
         }
 
-        return Entry.OTHER;
-    }
-
-    public ImmutableList<Entry> getDefaultEntries()
-    {
-        ImmutableList.Builder<Entry> list = ImmutableList.builder();
-
-        VALUES.forEach((list::add));
-
-        return list.build();
-    }
-
-    public int getEntryIndex(Entry entry) {
-        for (int i = 0; i < this.getDefaultEntries().size(); ++i) {
-            if ((getDefaultEntries().get(i)).equals(entry)) {
-                return i;
-            }
-        }
         return -1;
     }
 
-    public enum Entry
-    {
-        BUILDING_BLOCKS     ("building_blocks",     "building_blocks"),
-        COLORED_BLOCKS      ("colored_blocks",      "colored_blocks"),
-        NATURAL             ("natural_blocks",      "natural_blocks"),
-        FUNCTIONAL          ("functional_blocks",   "functional_blocks"),
-        REDSTONE            ("redstone_blocks",     "redstone_blocks"),
-        TOOLS               ("tools_and_utilities", "tools_and_utilities"),
-        COMBAT              ("combat",              "combat"),
-        FOOD_AND_DRINK      ("food_and_drinks",     "food_and_drinks"),
-        INGREDIENTS         ("ingredients",         "ingredients"),
-        SPAWN_EGGS          ("spawn_eggs",          "spawn_eggs"),
-        OPERATOR            ("op_blocks",           "op_blocks"),
-        OTHER               ("other",               "other");
-
-        private final String configKey;
-        private final String translationKey;
-
-        Entry(String configKey, String translationKey)
-        {
-            this.configKey = configKey;
-            this.translationKey = Reference.MOD_ID+".gui.label.sorting_category."+translationKey;
-
-        }
-
-        public String getStringValue()
-        {
-            return this.configKey;
-        }
-
-        @Nullable
-        public static Entry fromString(String key)
-        {
-            for (Entry entry : values())
-            {
-                if (entry.configKey.equalsIgnoreCase(key))
-                {
-                    return entry;
-                }
-                else if (entry.translationKey.equalsIgnoreCase(key))
-                {
-                    return entry;
-                }
-            }
-
-            return null;
-        }
+    public int fromIdentifier(Identifier id) {
+        return fromItemGroup(Registries.ITEM_GROUP.get(id));
     }
 }
 
