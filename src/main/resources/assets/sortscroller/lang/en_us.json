@@ -1,5 +1,6 @@
 {
   "sortInventoryToggle": "sortInventoryToggle",
+  "neverSortHotBar": "neverSortHotBar",
   "sortAssumeEmptyBoxStacks": "sortAssumeEmptyBoxStacks",
   "sortShulkerBoxesAtEnd": "sortShulkerBoxesAtEnd",
   "sortShulkerBoxesInverted": "sortShulkerBoxesInverted",
@@ -7,6 +8,7 @@
   "sortBottomPriorityInventory": "sortBottomPriorityInventory",
   "sortMethodDefault": "sortMethodDefault",
   "itemscroller.config.generic.comment.sortInventoryToggle": "Enables the Quick Inventory Sorting feature.\nThis is activated by hovering over any item,\nand then pressing the bound §a\"sortInventory\"§r key bind.",
+  "itemscroller.config.generic.comment.neverSortHotBar": "Inventory Sort will never sort the hotbar.",
   "itemscroller.config.generic.comment.sortAssumeEmptyBoxStacks": "Assume that empty shulker boxes can\nstack when sorting the inventory.\nThis is useful if you installed mods\nto allow shulker boxes to stack.\nThis will send an extra packet to ensure the\ninventory is synced.",
   "itemscroller.config.generic.comment.sortBottomPriorityInventory": "These items will have a priority to be sorted last.\nYou can put item IDs (eg. \"minecraft:diamond_sword\") or custom names (eg. \"Wither killer\").\nIf you put custom names, those will be preferred before the id.\nItems in the list will be sorted to the back according to the list.",
   "itemscroller.config.generic.comment.sortMethodDefault": "The default sorting method used to compare items.\n\n§6Category [ANY]§r = Sort by §a\"sortCategoryOrder\"§r first, and then followed by:\n§6Item Name§r - Sort by Items' Name\n§6Item Count§r - Sort by Item's Stack Size, then by RawID\n§6Item Rarity§r - Sort by Rarity, then by RawID\n§6Item RawID§r - Sort by RawID\n§d(RawID is the built-in Vanilla Item Index value)§r\n\n§cData Components are compared by Hash Code afterwards, and then\n§cby Item Stack Size after all other checks have passed.§r",
