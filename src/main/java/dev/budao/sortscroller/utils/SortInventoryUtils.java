@@ -111,6 +111,7 @@ public class SortInventoryUtils {
                 }
                 else if (focusedIndex >= 36 && focusedIndex < 45)
                 {
+                    if (SortConfigs.NEVER_SORT_HOTBAR.getBooleanValue()) return;
                     range.left(36).right(45);
                 }
             }
@@ -123,6 +124,7 @@ public class SortInventoryUtils {
                 }
                 else
                 {
+                    if (SortConfigs.NEVER_SORT_HOTBAR.getBooleanValue()) return;
                     range.left(range.right() - 9);
                 }
             }

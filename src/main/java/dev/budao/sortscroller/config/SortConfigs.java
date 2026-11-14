@@ -15,6 +15,7 @@ public class SortConfigs {
     private static final ImmutableList<String> DEFAULT_BOTTOM_SORTING = ImmutableList.of();
 
     public static final ConfigBoolean SORT_INVENTORY_TOGGLE                 = new ConfigBoolean("sortInventoryToggle",                     false, "itemscroller.config.generic.comment.sortInventoryToggle");
+    public static final ConfigBoolean NEVER_SORT_HOTBAR                     = new ConfigBoolean("neverSortHotBar",                     false, "itemscroller.config.generic.comment.neverSortHotBar");
     public static final ConfigBoolean SORT_ASSUME_EMPTY_BOX_STACKS          = new ConfigBoolean("sortAssumeEmptyBoxStacks",                false, "itemscroller.config.generic.comment.sortAssumeEmptyBoxStacks");
     public static final ConfigBoolean SORT_SHULKER_BOXES_AT_END             = new ConfigBoolean("sortShulkerBoxesAtEnd",                   true, "itemscroller.config.generic.comment.sortShulkerBoxesAtEnd");
     public static final ConfigBoolean SORT_SHULKER_BOXES_INVERTED           = new ConfigBoolean("sortShulkerBoxesInverted",                false, "itemscroller.config.generic.comment.sortShulkerBoxesInverted");
@@ -24,6 +25,7 @@ public class SortConfigs {
 
     public static final List<IConfigBase> OPTIONS = ImmutableList.of(
             SORT_INVENTORY_TOGGLE,
+            NEVER_SORT_HOTBAR,
             SORT_ASSUME_EMPTY_BOX_STACKS,
             SORT_SHULKER_BOXES_AT_END,
             SORT_SHULKER_BOXES_INVERTED,
